@@ -33,16 +33,34 @@
 - ResponseHanlder
 - MessageApi
 
-## Структура шаблона стратегии
-- service/strategyTempl/**
-- service (бинКомпоненты)
-  - Help
-  - ViewTree
-  - AddElement
-  - RemoveElement
+### Структура шаблона стратегии
+path: service/commands/ (описание см. javaDoc)
+- Help
+- ViewTree
+- AddElement
+- RemoveElement
+- Download
+- Upload
 
+### Services upload & downlod for excel files
+path: com/pandev/service/excelService/ (Назначение классов см. javaDoc) 
+- APIGroupsNode
+- ExcelService
+- ServiceParentNode
+- ServiceSubNode
 
-## ВСЕ команды ассоциированы с перечислением:
+#### Правила загрузки данных из внешнего Excel файла
+- если нет корневого узла -> создается
+- в БД добавляются только НОВЫЕ ЭЛЕМЕНТЫ
+- если выполнить дважды операцию upload с одним и тем файлом = состояние БД не изменится
+
+#### Используемые Шаблоны для Excel:
+для загрузки и выгрузки данных из Excel требуются специальные шаблоны:   
+any-data/extenal-resource/template.xlsx шаблон для download    
+any-data/extenal-resource/test-upload-excel.xlsx образец для upload
+
+### ВСЕ команды ассоциированы с соответствующими константами:
+path: com/pandev/utils/Constants
 - COMD_REMOVE_ELEMENT -> /removeElement
 - COMD_ADD_ELEMENT -> /addElement
 - COMD_HELP -> /help
@@ -50,47 +68,58 @@
 - COMD_START -> /start
 - COMD_DOWNLOAD -> /download (Выгрузка данных в Excel)
 - COMD_UPLOAD -> /upload (Загрузка элементов в БД из Excel)
-  
+
 
 ## Утилиты (utils/**)
-- **FileAPI** сервис загрузки данных из файлов
-- **Constanfs** константы
-- **utils.excelAPI.ExcelService** утилита загрузки/выгрузки excel файлов.
+path: com/pandev/utils (назначение классов см. javaDoc)
+- FileAPI сервис загрузки данных из файлов
+- Constants константы
+- InitFormatedTreeService
+- InitFormatedTreeString
+- ParserMessage
 
+## DTO (DataTransreObject)
+path: com/pandev/dto (Описание см. javaDoc)
+- DTOgroups
+- DTOparser
+- DTOresult
+- GroupsDetails
+- RecordDTOexcel
 
-  для загрузки и выгрузки данных из Excel требуются специальные шаблоны:   
-  any-data/extenal-resource/template.xlsx шаблон для download    
-  any-data/extenal-resource/test-upload-excel.xlsx образец для upload
-
-------------- 
 
 ## Репозиторий (repositories)    
   Для скриптов, которые не поддерживаются Hibernate, использованы опции nativeQuery = true
 
-  ВСЕ запросы покрыты модульными тестами.  
-  ***ВНИМАНИЕ***: модульные тесты привязаны к состоянию БД при разработке
-- TelegramChatRepository
-
-
-### Структура класса-сущности (Groups)
+### Структура бизнес-сущности (Groups)
 - rootnode id корневого узла
 - parentnode id родительского узла
-- ordernum индекс размещения узла в пределах корневого узла
+- ordernum индекс размещения узла в контексте корневого узла
 - levelnum уровень вложенности
 - txtgroup  строковый идентификатор элемента (уникальные значения)
 
-----------
+**Для управления структурой БД использовал liquibase** 
 
 Структура Groups содержит всю информацию по древовидной структуре.        
 Добавление узла изменяет ordernum для всех ниже лежащих узлов, входящих в структуру своего корневого узла.       
 Удаление узла изменяет значения ordernum, начиная с корневого узла.                    
 
-Используемая структура позволяет создавать и управлять древовидной структурой любой вложенности.
 
-## Загрузка из Excel:
-- если нет корневого узла -> создается  
-- в БД добавляются только НОВЫЕ ЭЛЕМЕНТЫ    
-- если выполнить дважды операцию upload состояние БД не изменится  
-- Шаблоны: см. выше в разделе Утилиты
+## Модульное тестирование
 
+**path: com/pandev/commands**
+- AddElementTest
+- DownloadTest
+- HelpTest
+- RemoveElementTest
+- UploadTest
+- ViewTreeTree  
+ 
+**path: com/pandev/service**   
+- ExcelSeriveTest
+- ServiceParentNodeTest
+- ServiceSubNodeTest
+
+**path: com/pandev/utils**   
+- FileAPITest
+- InitFormatedTreeStringTest****
 
