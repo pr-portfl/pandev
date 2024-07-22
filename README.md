@@ -28,7 +28,7 @@
 
 # Используемые сервисы
 
-## Взаимодействие с telegaramBot (from the controller package)
+## Взаимодействие с telegaramBot (com/pandev/controller)
 - TelegramBot 
 - ResponseHanlder
 - MessageApi
