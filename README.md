@@ -73,7 +73,7 @@ path: com/pandev/utils/Constants
 - COMD_UPLOAD -> /upload (Загрузка элементов в БД из Excel)
 
 В команде /addElement в идентификаторе элемента вместо пробела использовать символ нижнее подчеркивание "_"   
-- /addElement java  Создание корневого элемента
+- /addElement java  создание корневого элемента
 - /addElement java parallel_streams создание вложенного элемента
 
 ## Утилиты (utils/**)
