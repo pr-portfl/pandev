@@ -57,7 +57,10 @@ path: com/pandev/service/excelService/ (Назначение классов см
 #### Используемые Шаблоны для Excel:
 для загрузки и выгрузки данных из Excel требуются специальные шаблоны:   
 any-data/extenal-resource/template.xlsx шаблон для download    
-any-data/extenal-resource/test-upload-excel.xlsx образец для upload
+any-data/extenal-resource/test-upload-excel.xlsx образец для upload     
+Ввод данных в ячейки без пробелов.      
+Пробелы можно заменить символом нижнего подчеркивания.          
+Например: java_parallel_streams
 
 ### ВСЕ команды ассоциированы с соответствующими константами:
 path: com/pandev/utils/Constants
@@ -69,6 +72,9 @@ path: com/pandev/utils/Constants
 - COMD_DOWNLOAD -> /download (Выгрузка данных в Excel)
 - COMD_UPLOAD -> /upload (Загрузка элементов в БД из Excel)
 
+В команде /addElement в идентификаторе элемента вместо пробела использовать символ нижнее подчеркивание "_"   
+- /addElement java  Создание корневого элемента
+- /addElement java parallel_streams создание вложенного элемента
 
 ## Утилиты (utils/**)
 path: com/pandev/utils (назначение классов см. javaDoc)
